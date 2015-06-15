@@ -16,6 +16,7 @@ e.g. http://localhost:8080/query?number=%2B13479253754
 
 Error codes:
 400 - Bad Request : You did not format the request correctly
+
 404 - Not FOund : The number you entered was not present in the directory
 
 #POST
@@ -29,6 +30,7 @@ curl -i -X POST -H 'Content-Type: application/json' -d '{"name": "Mahd": "+13479
 
 Error Codes
 400 - Bad Request : You did not format the request correctly
+
 409 - Duplicate: A number with this context already exists in the service.
 
 #Structure
