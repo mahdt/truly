@@ -19,10 +19,10 @@ csv
   .fromStream(stream)
   .transform(function(row){
   		var tempNumber = row[0];
-  		tempNumber = '1' +tempNumber.replace(/[-() ]+/g, '');
+  		tempNumber = '+1' +tempNumber.replace(/[-() ]+|\+1/g, '');
   		if (phoneList[tempNumber] == undefined)
   			phoneList[tempNumber] = [];
-  		phoneList[tempNumber].push({ context:'' + row[1] + '', name:'' + row[2]+''});
+  		phoneList[tempNumber].push({ name:'' + row[2] + '', number:'' + tempNumber + '', context:'' + row[1]+''});
   		//console.log(phoneList);
     })
   .on("data", function(data){
@@ -30,15 +30,17 @@ csv
  })
  .on("end", function(){
  	console.log(phoneList);
-     console.log(phoneList['13853043918'][0].context);
- });
- /////////
-
-var port = process.argv[2];
-console.log(port);
-server.listen(port,function(){
+    console.log(phoneList['+13853043918'][0].context);
+	var port = process.argv[2];
+	console.log(port);
+	server.listen(port,function(){
 	console.log("Started on PORT " + port);
 })
 
-module.exports = server;
-module.exports = phoneList;
+ });
+ /////////
+
+
+exports.server = server;
+exports.phoneList = phoneList;
+exports.hello = 3;
