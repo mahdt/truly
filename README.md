@@ -7,9 +7,12 @@ e.g. node server.js 8080
 #GET
 You can send a get request from the browser by entering the URL in the following format:
 http://localhost:PORTNUMBER/query?number=%2Bxxxxxxxxxxx
+
 The PORTNUMBER is the port number you specified when you started the service.
 Each x denotes a number digit.
+
 e.g. http://localhost:8080/query?number=%2B13479253754
+
 
 Error codes:
 400 - Bad Request : You did not format the request correctly
@@ -18,9 +21,11 @@ Error codes:
 #POST
 You can send a post request using curl (or some other service).
 The service expects the body to be in JSON format.
+
 An example curl command is shown below:
 
 curl -i -X POST -H 'Content-Type: application/json' -d '{"name": "Mahd": "+13479253754", "context": "TrulyWireless"}' http://localhost:8080/number
+
 
 Error Codes
 400 - Bad Request : You did not format the request correctly
