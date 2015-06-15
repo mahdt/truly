@@ -4,7 +4,6 @@
   "dependencies": {
     "body-parser": "^1.8.1",
     "express": "^4.9.0",
-    "csv" : "^0.4.5",
     "fast-csv" : "^0.6"
   }
 }

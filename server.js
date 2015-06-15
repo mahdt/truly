@@ -10,37 +10,38 @@ server.use(bodyParser.urlencoded({ extended: false }));
 
 var router = require('./router')(server);
 
-///////
+/////// data handling //////
 var csv = require('fast-csv');
 var phoneList = {};
-var stream = fs.createReadStream("smallcsv.csv");
-//.fromString('82,boss,Zbigniew\n92,worker,Serge\n12,friend,Xilo\n92, worker.home, Zbigniew\n')
+var stream = fs.createReadStream("interview-callerid-data.csv");
+
 csv
   .fromStream(stream)
   .transform(function(row){
+  		//this function reads a row from the file
+  		//it formats the number into E.164 format before storage
+  		//and stores the row into the phoneList
   		var tempNumber = row[0];
-  		tempNumber = '+1' +tempNumber.replace(/[-() ]+|\+1/g, '');
-  		if (phoneList[tempNumber] == undefined)
-  			phoneList[tempNumber] = [];
+  		tempNumber = tempNumber.replace(/[-() ]+|\+1/g, ''); //number being formatted correctly
+  		tempNumber = '+1' + tempNumber;
+
+  		if (phoneList[tempNumber] == undefined) // if number not present already
+  			phoneList[tempNumber] = []; // add it to hashmap with an empty value
+
+  		//add the new name and context alongside the appropriate key
   		phoneList[tempNumber].push({ name:'' + row[2] + '', number:'' + tempNumber + '', context:'' + row[1]+''});
-  		//console.log(phoneList);
     })
   .on("data", function(data){
-     //console.log(data);
- })
- .on("end", function(){
- 	console.log(phoneList);
-    console.log(phoneList['+13853043918'][0].context);
-	var port = process.argv[2];
-	console.log(port);
-	server.listen(port,function(){
-	console.log("Started on PORT " + port);
-})
+  		//nothing
+   })
+  .on("end", function(){
+		var port = process.argv[2];
+		// once data has been read and stored, start the server
+		server.listen(port,function(){
+			console.log("Started on PORT " + port);
+		})
 
- });
- /////////
-
+  });
 
 exports.server = server;
 exports.phoneList = phoneList;
-exports.hello = 3;
